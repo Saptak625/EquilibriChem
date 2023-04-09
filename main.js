@@ -1,4 +1,4 @@
-let numOfParticles = [100, 100, 0, 0];
+let numOfParticles = [150, 100, 0, 0];
 let particleTypes = ['A', 'B', 'C', 'D'];
 
 let allParticles = [];

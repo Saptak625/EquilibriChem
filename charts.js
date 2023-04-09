@@ -10,6 +10,8 @@ window.onload = function () {
         },
         axisY: {
             title: "Number of Particles",
+            minimum: 0,
+            maximum: allParticles.length,
         },
         data: [
             {
