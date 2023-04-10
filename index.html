@@ -48,7 +48,7 @@
             <div class="col mx-auto text-start">
                 <div class="d-block">
                     <label class="me-2" for="sliderTemp">Temperature (K):</label>
-                    <input type="range" id="sliderTemp" name="sliderTemp" min="100" max="500" value="300">
+                    <input type="range" id="sliderTemp" name="sliderTemp" min="100" max="500" value="400">
                 </div>
                 <!-- <div class="d-block">
                     <label class="me-2" for="sliderPressure">Pressure (atm):</label>
@@ -63,12 +63,12 @@
         <p>Note that the true measure of the favorability of a reaction is given by Gibbs Free Energy, which also takes
             in entropy and temperature into consideration. This is currently ignorned and not considered for simulation
             simplicity purposes.</p>
-        \[\Delta G = \Delta H - T \Delta S \]
+        \[\Delta G° = \Delta H° - T \Delta S° \]
         <div class="mx-auto text-center">
             <div class="d-inline-flex">
                 <div class="m-auto me-4">
                     <div class="me-4">
-                        <label class="me-2" for="sliderHChange">\(\Delta H\) (-100 kJ to 100 kJ):</label>
+                        <label class="me-2" for="sliderHChange">\(\Delta H°\) (-100 kJ to 100 kJ):</label>
                         <input type="range" id="sliderHChange" name="sliderHChange" min="-100" max="100" value="-100">
                     </div>
                     <div class="">
@@ -77,7 +77,7 @@
                     </div>
                     <div class="mt-3">
                         <div>
-                            <strong>\(\Delta H\):</strong> <span id="h_change">-100</span> kJ
+                            <strong>\(\Delta H°\):</strong> <span id="h_change">-100</span> kJ
                         </div>
                         <div>
                             <strong>Endothermic or Exothermic:</strong> <span id="endo_exo">Endothermic</span>
@@ -105,7 +105,19 @@
             reaction has shifted to the products. If \(K_c > 1\), then the reaction has shifted to the products. If
             \(K_c < 1\), then the reaction has shifted to the reactants. If \(K_c=1\), then the reaction is at
                 equilibrium. </p>
-                <div id="chartContainer" class="mb-4" style="height: 400px; width:100%;"></div>
+                <h5 class="mt-4">Gibbs Free Energy</h5>
+                \[\Delta G° = -R T ln(K_c) \]
+                <strong>
+                    <div id="gibbsChange" class="text-center">= 0.01</div>
+                </strong>
+                <p>where \(R\) is the ideal gas constant and \(T\) is the temperature in Kelvin. If \(ΔG° < 0\), then
+                        \(K_c>1\), and products are favored over reactants at equilibrium. If \(ΔG° > 0\), then \(K_c <
+                            1\), and reactants are favored over products at equilibrium. If \(ΔG°=0\), then \(K_c=1\),
+                            and the amount of products will be roughly equal to the amount of reactants at equilibrium.
+                            This is a rare occurrence for chemical reactions.</p>
+    </div>
+    <div id="chartContainer" class="mb-4" style="height: 400px; width:100%;">
+    </div>
     </div>
     <footer class="bg-dark text-white row mx-0 py-4 w-100 mt-auto">
         <div class="col text-center mx-3">

@@ -54,7 +54,8 @@ window.onload = function () {
 
     var xVal = 0;
     var updateInterval = 250;
-    let kc = 0.1;
+    let kc = 0.01;
+    let gibbsChange = 0.01;
     // var dataLength = 20; // number of dataPoints visible at any point
 
     var updateChart = function (count) {
@@ -79,6 +80,9 @@ window.onload = function () {
 
         kc = cDPS[cDPS.length - 1].y * dDPS[dDPS.length - 1].y / (aDPS[aDPS.length - 1].y * bDPS[bDPS.length - 1].y);
         document.getElementById('kc').innerHTML = "= " + kc.toFixed(2);
+
+        gibbsChange = -8.314 * parseInt(document.getElementById('sliderTemp').value) * Math.log(kc);
+        document.getElementById('gibbsChange').innerHTML = "= " + (gibbsChange / 1000).toFixed(2) + " kJ";
 
         // if (aDPS.length > dataLength) {
         //     aDPS.shift();
