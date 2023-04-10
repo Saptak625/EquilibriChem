@@ -13,11 +13,8 @@
     <div class="container py-3">
         <h1>EquilibriChem</h1>
         <hr>
-        <p>Overview of Tool Here</p>
-        <h3 class="mt-2">Energy Diagram:</h3>
-        <div id="energeticsCanvas"></div>
-        <h3 class="mt-2">Simulation:</h3>
-        <h5>About</h5>
+        <p>P5.js Simulation to illustate Dynamic Chemical Equilibrium.</p>
+        <h3 class="mt-4">Simulation:</h3>
         <p>Given the following reaction,</p>
         \[A + B \rightarrow C + D \]
         <p>This simulation will show the particles bouncing around in space. It follows the Collision Theory
@@ -29,7 +26,74 @@
             <li>The orientation of the colliding particles must be favorable for a reaction to occur.</li>
         </ul>
         <div id="simulationCanvas"></div>
-        <h3 class="mt-2">Equilibrium Graph:</h3>
+        <div class="row">
+            <div class="col mx-auto text-end">
+                <div class="d-block">
+                    <label class="me-2" for="sliderA">Initial A Concentration:</label>
+                    <input type="range" id="sliderA" name="sliderA" min="0" max="200" value="200">
+                </div>
+                <div class="d-block">
+                    <label class="me-2" for="sliderB">Initial B Concentration:</label>
+                    <input type="range" id="sliderB" name="sliderB" min="0" max="200" value="200">
+                </div>
+                <div class="d-block">
+                    <label class="me-2" for="sliderC">Initial C Concentration:</label>
+                    <input type="range" id="sliderC" name="sliderC" min="0" max="200" value="0">
+                </div>
+                <div class="d-block">
+                    <label class="me-2" for="sliderD">Initial D Concentration:</label>
+                    <input type="range" id="sliderD" name="sliderD" min="0" max="200" value="0">
+                </div>
+            </div>
+            <div class="col mx-auto text-start">
+                <div class="d-block">
+                    <label class="me-2" for="sliderTemp">Temperature (K):</label>
+                    <input type="range" id="sliderTemp" name="sliderTemp" min="100" max="500" value="300">
+                </div>
+                <!-- <div class="d-block">
+                    <label class="me-2" for="sliderPressure">Pressure (atm):</label>
+                    <input type="range" id="sliderPressure" name="sliderPressure" min="1" max="10" value="1">
+                </div> -->
+            </div>
+        </div>
+        <h3 class="mt-4">Energy Diagram:</h3>
+        <p>In this section, the energetics of the reaction can be changed. Based on whether the reaction is endothermic
+            or exothermic, the forward reaction or backward reaction will be more favorable. Furthermore, the activation
+            energy peak can be changed to simulate the addition/removal of a catalyst.</p>
+        <p>Note that the true measure of the favorability of a reaction is given by Gibbs Free Energy, which also takes
+            in entropy and temperature into consideration. This is currently ignorned and not considered for simulation
+            simplicity purposes.</p>
+        \[\Delta G = \Delta H - T \Delta S \]
+        <div class="mx-auto text-center">
+            <div class="d-inline-flex">
+                <div class="m-auto me-4">
+                    <div class="me-4">
+                        <label class="me-2" for="sliderHChange">\(\Delta H\) (-100 kJ to 100 kJ):</label>
+                        <input type="range" id="sliderHChange" name="sliderHChange" min="-100" max="100" value="-100">
+                    </div>
+                    <div class="">
+                        <label class="me-2" for="sliderFEA">Minimum \(E_a\) (Forward or Backward):</label>
+                        <input type="range" id="sliderFEA" name="sliderFEA" min="10" max="60" value="50">
+                    </div>
+                    <div class="mt-3">
+                        <div>
+                            <strong>\(\Delta H\):</strong> <span id="h_change">-100</span> kJ
+                        </div>
+                        <div>
+                            <strong>Endothermic or Exothermic:</strong> <span id="endo_exo">Endothermic</span>
+                        </div>
+                        <div>
+                            <strong>Forward Reaction \(E_a\):</strong> <span id="forwardEA">60</span> kJ
+                        </div>
+                        <div>
+                            <strong>Backward Reaction \(E_a\):</strong> <span id="backwardEA">160</span> kJ
+                        </div>
+                    </div>
+                </div>
+                <div id="energeticsCanvas" style="width: 400px; height: 400px;"></div>
+            </div>
+        </div>
+        <h3 class="mt-4">Equilibrium Graph:</h3>
         <p>This graphs the relative concentrations of each of the reactants and products. Use this graph to see how the
             equilibrium changes due to a stress (Le Chatelier's Principle).</p>
         <h5>Equilibrium Constant</h5>
@@ -37,11 +101,11 @@
         <strong>
             <div id="kc" class="text-center">= 0.01</div>
         </strong>
-        <p>where [A] is the concentration of A, and so on. The equilibrium constant is a measure of how far the reaction
-            has shifted to the products. If K is greater than 1, then the reaction has shifted to the products. If K is
-            less than 1, then the reaction has shifted to the reactants. If K is equal to 1, then the reaction is at
-            equilibrium.</p>
-        <div id="chartContainer" class="mb-4" style="height: 400px; width:100%;"></div>
+        <p>where \([A]\) is the concentration of A, and so on. The equilibrium constant is a measure of how far the
+            reaction has shifted to the products. If \(K_c > 1\), then the reaction has shifted to the products. If
+            \(K_c < 1\), then the reaction has shifted to the reactants. If \(K_c=1\), then the reaction is at
+                equilibrium. </p>
+                <div id="chartContainer" class="mb-4" style="height: 400px; width:100%;"></div>
     </div>
     <footer class="bg-dark text-white row mx-0 py-4 w-100 mt-auto">
         <div class="col text-center mx-3">

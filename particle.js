@@ -5,7 +5,8 @@ class Particle {
         this.sketch = sketch;
         this.radius = 8;
         this.pos = this.sketch.createVector(this.sketch.random(this.radius, this.sketch.width - this.radius), this.sketch.random(this.radius, this.sketch.height - this.radius));
-        this.vel = this.sketch.createVector(this.sketch.random(-5, 5), this.sketch.random(-5, 5));
+        this.temp = parseInt(document.getElementById('sliderTemp').value) / 100;
+        this.vel = this.sketch.createVector(this.sketch.random(-this.temp, this.temp), this.sketch.random(-this.temp, this.temp));
         this.type = type;
     }
 
@@ -56,12 +57,18 @@ class Particle {
             // other.vel.set(cos(angle) * v2f - sin(angle) * u2.y, sin(angle) * v2f + cos(angle) * u2.y);
 
             // Given the reaction, A + B <-> C + D, we must show this relationship.
+            let colMag = this.vel.mag() + other.vel.mag();
+            let colFactor = 15;
             if (this.type == 'A' && other.type == 'B' || this.type == 'B' && other.type == 'A') {
-                this.type = 'C';
-                other.type = 'D';
+                if (colMag * colFactor > forwardActivationEnergy) {
+                    this.type = 'C';
+                    other.type = 'D';
+                }
             } else if (this.type == 'C' && other.type == 'D' || this.type == 'D' && other.type == 'C') {
-                this.type = 'A';
-                other.type = 'B';
+                if (colMag * colFactor > backwardActivationEnergy) {
+                    this.type = 'A';
+                    other.type = 'B';
+                }
             }
         }
     }
@@ -80,6 +87,13 @@ class Particle {
             // console.log('Glitching');
             //this.sketch.Randomly generate a new position
             this.pos = this.sketch.createVector(this.sketch.random(this.radius, this.sketch.width - this.radius), this.sketch.random(this.radius, this.sketch.height - this.radius));
+        }
+    }
+
+    envChangesToVelocity() {
+        if (this.temp != parseInt(document.getElementById('sliderTemp').value) / 100) {
+            this.temp = parseInt(document.getElementById('sliderTemp').value) / 100;
+            this.vel = this.sketch.createVector(this.sketch.random(-this.temp, this.temp), this.sketch.random(-this.temp, this.temp));
         }
     }
 }

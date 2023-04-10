@@ -9,7 +9,7 @@ window.onload = function () {
             text: "Equilibrium Concentrations"
         },
         axisY: {
-            title: "Frequency of Particles",
+            title: "Relative Concentration",
             minimum: 0,
             maximum: 1,
         },

@@ -1,4 +1,5 @@
-numOfParticles = [200, 200, 0, 0];
+initialNumOfParticles = [200, 200, 0, 0];
+numOfParticles = initialNumOfParticles;
 
 simulation = (sketch) => {
     let particleTypes = ['A', 'B', 'C', 'D'];
@@ -19,6 +20,60 @@ simulation = (sketch) => {
     sketch.draw = () => {
         sketch.background(0, 0, 0, 50);
 
+        // Read the slider values
+        let sliderA = document.getElementById('sliderA');
+        let sliderB = document.getElementById('sliderB');
+        let sliderC = document.getElementById('sliderC');
+        let sliderD = document.getElementById('sliderD');
+
+        // Find differences between the sliders now and last inital values
+        let diffA = parseInt(sliderA.value) - initialNumOfParticles[0];
+        let diffB = parseInt(sliderB.value) - initialNumOfParticles[1];
+        let diffC = parseInt(sliderC.value) - initialNumOfParticles[2];
+        let diffD = parseInt(sliderD.value) - initialNumOfParticles[3];
+
+        // Add or remove particles to match the sliders
+        if (diffA > 0) {
+            for (let i = 0; i < diffA; i++) {
+                allParticles.push(new Particle(sketch, 'A'));
+            }
+        } else if (diffA < 0) {
+            for (let i = 0; i < -diffA; i++) {
+                allParticles.splice(allParticles.findIndex(particle => particle.type == 'A'), 1);
+            }
+        }
+        if (diffB > 0) {
+            for (let i = 0; i < diffB; i++) {
+                allParticles.push(new Particle(sketch, 'B'));
+            }
+        } else if (diffB < 0) {
+            for (let i = 0; i < -diffB; i++) {
+                allParticles.splice(allParticles.findIndex(particle => particle.type == 'B'), 1);
+            }
+        }
+        if (diffC > 0) {
+            for (let i = 0; i < diffC; i++) {
+                allParticles.push(new Particle(sketch, 'C'));
+            }
+        } else if (diffC < 0) {
+            for (let i = 0; i < -diffC; i++) {
+                allParticles.splice(allParticles.findIndex(particle => particle.type == 'C'), 1);
+            }
+        }
+        if (diffD > 0) {
+            for (let i = 0; i < diffD; i++) {
+                allParticles.push(new Particle(sketch, 'D'));
+            }
+        } else if (diffD < 0) {
+            for (let i = 0; i < -diffD; i++) {
+                allParticles.splice(allParticles.findIndex(particle => particle.type == 'D'), 1);
+            }
+        }
+
+        // Set new number of particles
+        initialNumOfParticles = [sliderA.value, sliderB.value, sliderC.value, sliderD.value];
+        numOfParticles = initialNumOfParticles;
+
         // For each particle in the list
         for (let i = 0; i < allParticles.length; i++) {
             let particle = allParticles[i];
@@ -27,6 +82,7 @@ simulation = (sketch) => {
             particle.checkEdges();
             particle.collideWithOtherParticles(allParticles);
             particle.checkValidPosition();
+            particle.envChangesToVelocity();
             particle.display();
         }
 
