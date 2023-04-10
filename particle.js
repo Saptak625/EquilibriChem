@@ -1,10 +1,11 @@
-class Particle {
-    particleColors = [color(255, 0, 0), color(0, 255, 0), color(0, 0, 255), color(255, 255, 0)];
+particleColors = [[180, 0, 0], [180, 180, 0], [90, 0, 180], [0, 180, 180]];
 
-    constructor(type) {
+class Particle {
+    constructor(sketch, type) {
+        this.sketch = sketch;
         this.radius = 8;
-        this.pos = createVector(random(this.radius, width - this.radius), random(this.radius, height - this.radius));
-        this.vel = createVector(random(-5, 5), random(-5, 5));
+        this.pos = this.sketch.createVector(this.sketch.random(this.radius, this.sketch.width - this.radius), this.sketch.random(this.radius, this.sketch.height - this.radius));
+        this.vel = this.sketch.createVector(this.sketch.random(-5, 5), this.sketch.random(-5, 5));
         this.type = type;
     }
 
@@ -13,34 +14,35 @@ class Particle {
     }
 
     display() {
-        noStroke();
-        fill(this.particleColors[this.type.charCodeAt(0) - 65]);
-        ellipse(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2);
+        this.sketch.noStroke();
+        let c = particleColors[this.type.charCodeAt(0) - 65];
+        this.sketch.fill(c[0], c[1], c[2]);
+        this.sketch.ellipse(this.pos.x, this.pos.y, this.radius * 2, this.radius * 2);
     }
 
     checkEdges() {
-        if (this.pos.x - this.radius < 0 || this.pos.x + this.radius > width) {
+        if (this.pos.x - this.radius < 0 || this.pos.x + this.radius > this.sketch.width) {
             this.vel.x *= -1;
         }
-        if (this.pos.y - this.radius < 0 || this.pos.y + this.radius > height) {
+        if (this.pos.y - this.radius < 0 || this.pos.y + this.radius > this.sketch.height) {
             this.vel.y *= -1;
         }
     }
 
     checkCollision(other) {
-        let distance = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y);
+        let distance = this.sketch.dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y);
         if (distance <= this.radius + other.radius) {
             let dx = other.pos.x - this.pos.x;
             let dy = other.pos.y - this.pos.y;
-            let angle = atan2(dy, dx);
+            let angle = this.sketch.atan2(dy, dx);
             // Assuming the particles have the same mass.
             // Particles will switch momentum.
             let v1 = other.vel.mag()
             let v2 = this.vel.mag()
 
             // Set the new velocity vectors
-            this.vel.set(cos(-angle) * v1, sin(-angle) * v1);
-            other.vel.set(cos(angle) * v2, sin(angle) * v2);
+            this.vel.set(this.sketch.cos(-angle) * v1, this.sketch.sin(-angle) * v1);
+            other.vel.set(this.sketch.cos(angle) * v2, this.sketch.sin(angle) * v2);
 
             // let m1 = this.radius * this.radius * PI;
             // let m2 = other.radius * other.radius * PI;
@@ -74,10 +76,10 @@ class Particle {
 
     checkValidPosition() {
         let bound = this.radius / 2 + 1;
-        if (this.pos.x - this.radius < -bound || this.pos.x + this.radius > width + bound || this.pos.y - this.radius < -bound || this.pos.y + this.radius > height + bound) {
-            console.log('Glitching');
-            //Randomly generate a new position
-            this.pos = createVector(random(this.radius, width - this.radius), random(this.radius, height - this.radius));
+        if (this.pos.x - this.radius < -bound || this.pos.x + this.radius > this.sketch.width + bound || this.pos.y - this.radius < -bound || this.pos.y + this.radius > this.sketch.height + bound) {
+            // console.log('Glitching');
+            //this.sketch.Randomly generate a new position
+            this.pos = this.sketch.createVector(this.sketch.random(this.radius, this.sketch.width - this.radius), this.sketch.random(this.radius, this.sketch.height - this.radius));
         }
     }
 }
